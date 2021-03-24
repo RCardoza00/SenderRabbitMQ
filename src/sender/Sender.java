@@ -15,6 +15,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 /**
  *
@@ -35,13 +36,26 @@ public class Sender {
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             //creacion de la entidad a enviar
             Payaso payasin=new Payaso();
-            payasin.setApodo("platanito");
-            payasin.setCirco("campo 40");
-            payasin.setNivelDeComedia(8);
+//            Scanner tec=new Scanner(System.in);
+//            System.out.println("Introduce el apodo del payaso: ");
+//            String apodo=tec.next();
+//            System.out.println("Introduce el circo al que pertenece el payaso: ");
+//            String circo=tec.next();
+//            System.out.println("Introduce el nivel de comedia del payaso: ");
+//            int nivel=tec.nextInt();
+            int envios=0;
+            while(envios<60){
+                 payasin.setApodo("Payaso del rodeo");
+            payasin.setCirco("Du solei");
+            payasin.setNivelDeComedia(6+envios);
             byte[] byteArray=getByteArray(payasin);
             String message = "testiri";
             channel.basicPublish("", QUEUE_NAME, null, byteArray);
-            System.out.println(" [x] Sent '" + payasin + "'"+" TESTIRI");
+            System.out.println(" [x] Envié '" + payasin + "'"+" TESTIRI");
+            envios++;
+            Thread.sleep(500);
+            }
+           
         }
     }
 
